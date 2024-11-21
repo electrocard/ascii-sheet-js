@@ -25,7 +25,7 @@ Include JavaScript for Conversion: To automatically convert the ASCII table into
 
 
 
-#Benefits of Using <sheet>
+# Benefits of Using <sheet>
 
     Simplicity: You can easily store data in a human-readable ASCII table format within your HTML code.
     Automatic Conversion: The JavaScript automatically converts the ASCII content to a structured HTML table, saving time and effort.
