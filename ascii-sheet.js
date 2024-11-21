@@ -1,64 +1,39 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const asciiContainer = document.getElementById("ascii-container");
-
-
+    // Fonction pour convertir un tableau ASCII en tableau HTML
     function convertAsciiToHtml(ascii) {
-        const rows = ascii.split("\n").filter(row => row.trim() !== "");
-        const table = document.createElement("table");
+        const lines = ascii.trim().split('\n');
+        let html = '<table border="1"><thead><tr>';
 
-        rows.forEach((row, index) => {
-            if (row.startsWith("+")) return; 
-            const tr = document.createElement("tr");
+        // Extraire les en-têtes du tableau (2e ligne ASCII)
+        const headers = lines[1].split('|').map(header => header.trim()).filter(Boolean);
+        headers.forEach(header => {
+            html += `<th>${header}</th>`;
+        });
 
-            // Identifier l'en-tête
-            const isHeader = index === 1;
-            const cellType = isHeader ? "th" : "td";
+        html += '</tr></thead><tbody>';
 
-            // Extraire le contenu des colonnes
-            row.split("|").forEach((cell, idx) => {
-                if (idx === 0 || idx === row.split("|").length - 1) return; 
-                const td = document.createElement(cellType);
-                td.textContent = cell.trim(); 
-                tr.appendChild(td);
+        // Extraire les données des lignes suivantes
+        for (let i = 3; i < lines.length - 1; i++) {
+            const rowData = lines[i].split('|').map(cell => cell.trim()).filter(Boolean);
+            html += '<tr>';
+            rowData.forEach(cell => {
+                html += `<td>${cell}</td>`;
             });
+            html += '</tr>';
+        }
 
-            table.appendChild(tr);
-        });
-
-        return table;
+        html += '</tbody></table>';
+        return html;
     }
 
-    function isAsciiTable(text) {
-        const lines = text.trim().split("\n");
-        return (
-            lines.length > 2 &&
-            lines[0].startsWith("+") &&
-            lines[0].includes("-") &&
-            lines[1].startsWith("|") &&
-            lines[1].includes("|")
-        );
-    }
-
-    function renderContent(container) {
-        const rawContent = container.textContent.trim();
-        container.innerHTML = ""; 
-
-        const segments = rawContent.split("\n\n"); 
-
-        segments.forEach(segment => {
-            if (isAsciiTable(segment)) {
-                
-                const htmlTable = convertAsciiToHtml(segment);
-                container.appendChild(htmlTable);
-            } else {
-                
-                const paragraph = document.createElement("p");
-                paragraph.textContent = segment;
-                container.appendChild(paragraph);
-            }
+    // Fonction pour parcourir toutes les balises <sheet> et convertir les tableaux ASCII
+    function convertAllSheets() {
+        const sheets = document.querySelectorAll('sheet');
+        sheets.forEach(sheet => {
+            const asciiContent = sheet.textContent.trim();
+            const htmlTable = convertAsciiToHtml(asciiContent);
+            sheet.innerHTML = htmlTable;  // Remplacer le contenu du <sheet> par le tableau HTML
         });
     }
 
-    
-    renderContent(asciiContainer);
-});
+    // Exécuter la conversion au chargement de la page
+    window.onload = convertAllSheets;
