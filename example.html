@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affichage automatique des tableaux ASCII</title>
+    <script src="ascii-sheet.js"></script>
+    <style>
+        /* Default sheet style*/
+        .sheet {
+            margin: 20px;
+            padding: 10px;
+            border: 2px solid #333;
+            width: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<sheet>
+    +----+------------+-------+
+    | ID | Name        | Age   |
+    +----+------------+-------+
+    | 1  | Alice      | 25    |
+    | 2  | Bob        | 30    |
+    | 3  | Charlie    | 28    |
+    +----+------------+-------+
+</sheet>
+
+<sheet>
+    +----+---------+---------+
+    | Code | City  | Country   |
+    +----+---------+---------+
+    | 101  | Paris  | France |
+    | 102  | Lyon   | France |
+    | 103  | Tokyo  | Japon  |
+    +----+---------+---------+
+</sheet>
+
+
+
+</body>
+</html>
